@@ -11,13 +11,8 @@ public class NumberUtil {
      * @return Whether or not the number is prime
      */
     public static boolean isPrime(int num) {
-        boolean flag = false;
+        for (int i = 2; i < num / 2; i ++) if (num % i == 0) return true;
 
-        for (int i = 2; i < num / 2; i ++) if (num % i == 0) {
-            flag = true;
-            break;
-        }
-
-        return !flag;
+        return false;
     }
 }

@@ -6,7 +6,55 @@
 
     <groupId>me.railrunner16</groupId>
     <artifactId>RailLib</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
+    <distributionManagement>
+        <repository>
+            <id>dmrail</id>
+            <name>DMRail Games Repo</name>
+            <url>http://nexus.dmrail.games/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
 
+    <build>
+        <plugins>
+        <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.5.1</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <serverId>nexus</serverId>
+                    <nexusUrl>http://nexus.dmrail.games</nexusUrl>
+                    <skipStaging>true</skipStaging>
+                </configuration>
+			</plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
