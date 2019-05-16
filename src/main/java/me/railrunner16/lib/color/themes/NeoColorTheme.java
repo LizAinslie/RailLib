@@ -10,7 +10,7 @@ import me.railrunner16.lib.color.ColorTheme;
  */
 public class NeoColorTheme extends ColorTheme {
     /**
-     * Instantiate the Nep color theme.
+     * Instantiate the Neo color theme.
      */
     public NeoColorTheme() {
         super("neo", new Color(33, 47, 61), new Color(255, 255, 255), true,
