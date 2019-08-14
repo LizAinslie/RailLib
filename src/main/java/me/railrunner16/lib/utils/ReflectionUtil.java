@@ -12,24 +12,24 @@ public class ReflectionUtil {
      /**
      * Get all the accessible fields of an object
      *
-     * @param o The object to get fields from
-     * @return The object's fields
+     * @param clazz The class to get fields from.
+     * @return The class's fields
      */
-    public static Field[] getFields(Object o) {
-        return o.getClass().getFields();
+    public static Field[] getFields(Class<?> clazz) {
+        return clazz.getDeclaredFields();
     }
 
     /**
      * Retrieve a field from an object.
      *
-     * @param o         The object to retrieve the field from.
+     * @param clazz The class to retrieve the field from.
      * @param fieldName The name of the field to retrieve.
      * @return The field, or null if the field does not exist.
      */
     @Nullable
-    public static Field getField(Object o, String fieldName) {
+    public static Field getField(Class<?> clazz, String fieldName) {
         try {
-            return o.getClass().getField(fieldName);
+            return clazz.getDeclaredField(fieldName);
         } catch (NoSuchFieldException e) {
             return null;
         }

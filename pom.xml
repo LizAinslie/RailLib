@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.railrunner16</groupId>
+    <groupId>me.railrunner16.lib</groupId>
     <artifactId>RailLib</artifactId>
-    <version>1.2.1</version>
+    <version>0.0.1</version>
 
     <distributionManagement>
         <repository>
-            <id>dmrail</id>
+            <id>dmrail-nexus</id>
             <name>DMRail Games Repo</name>
             <url>http://nexus.dmrail.games/repository/maven-releases/</url>
         </repository>
@@ -77,7 +75,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <serverId>nexus</serverId>
+                    <serverId>dmrail-nexus</serverId>
                     <nexusUrl>http://nexus.dmrail.games</nexusUrl>
                     <skipStaging>true</skipStaging>
                 </configuration>
