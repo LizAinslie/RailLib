@@ -14,7 +14,7 @@ public class WrapperFrame extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public void fullScreen() {
+    public void fillScreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
     }

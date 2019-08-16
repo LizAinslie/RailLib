@@ -1,80 +1,83 @@
 package me.railrunner16.lib.ui.components.console;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Console extends JPanel {
+public class Console extends JPanel implements KeyListener {
     public static final long serialVersionUID = 1L;
 
     private JList<String> messages;
-    private DefaultListModel<String> lModel = new DefaultListModel<>();
-	
-	public JTextField textInput = new JTextField(10);
-	private TextInputListener textInputListener;
-	private JPanel textInputPanel = new JPanel(new FlowLayout());
-	
-	public ConsoleListener listener = null;
+	private DefaultListModel<String> lModel = new DefaultListModel<>();
 
-    public Console(String welcomeMessage) {
+	private JTextField textInputField;
+	private String text = null;
+
+	public Console(int columns, String welcome) {
 		super(new BorderLayout());
 
-		this.textInputListener = new TextInputListener(this);
-		
-		this.sendMessage(welcomeMessage);
-        this.messages = new JList<>(this.lModel);
+		this.textInputField = new JTextField(columns);
+		this.textInputField.addKeyListener(this);
+		this.textInputField.setVisible(false);
+		this.add(this.textInputField, BorderLayout.PAGE_END);
+
+		this.messages = new JList<String>(this.lModel);
+
+		this.messages.setAutoscrolls(true);
 
 		this.add(this.messages, BorderLayout.CENTER);
-    }
+		this.sendMessage(welcome);
+	}
+
+	@Override
+	public int getWidth() {
+		return this.textInputField.getWidth();
+	}
+
+	@Override
+	public int getHeight() {
+		return this.textInputField.getHeight() + this.messages.getHeight();
+	}
 
 	public void sendMessage(String message) {
 		this.lModel.addElement("> " + message);
 	}
 
-	public void sendIn(String message) {
-		this.lModel.addElement("< " + message);
-	}
+	public String promptString(String prompt) {
+		try {
+			this.sendMessage(prompt);
 
-	public void promptString(String prompt, String label) {
-		this.textInput.addActionListener(this.textInputListener);
-		this.textInput.setActionCommand(label);
+			this.textInputField.setVisible(true);
 
-		this.textInputPanel.add(new JLabel(prompt));
-		this.textInputPanel.add(this.textInput);
-		this.add(this.textInputPanel, BorderLayout.PAGE_END);
-	}
+			while (this.text == null) Thread.sleep(500);
 
-	public void setConsoleListener(ConsoleListener listener) {
-		this.listener = listener;
-	}
-
-	private class TextInputListener implements ActionListener {
-		private Console vc;
-
-		public TextInputListener(Console vc) {
-			this.vc = vc;
+			return this.text;
+		} catch (InterruptedException exception) {
+			return "";
 		}
+	}
+    
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {}
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (this.vc.listener != null) {
-				String text = this.vc.textInput.getText();
-
-				String label = e.getActionCommand();
-
-				this.vc.listener.textInputGiven(text, label);
-
-				this.vc.sendIn(text);
-			}
-
-			this.vc.textInputPanel.setVisible(false);
+	@Override
+	public void keyReleased(KeyEvent keyEvent) {
+		switch(keyEvent.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
+				String text = this.textInputField.getText();
+				this.text = text;
+				this.lModel.addElement("< " + text);
+				this.textInputField.setVisible(false);
+				break;
+			default:
+				break;
 		}
 	}
 }
